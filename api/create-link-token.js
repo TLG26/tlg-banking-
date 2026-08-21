@@ -20,7 +20,9 @@ const plaidClient = new PlaidApi(configuration);
 
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+    return res.status(405).json({
+      error: "Method not allowed",
+    });
   }
 
   try {
@@ -39,5 +41,9 @@ module.exports = async function handler(req, res) {
     });
   } catch (error) {
     console.error(error.response?.data || error);
+
     return res.status(500).json({
-  error: error.response?.data || error.message || "Unknown error",
+      error: error.response?.data || error.message || "Unknown error",
+    });
+  }
+};
