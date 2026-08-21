@@ -1,0 +1,8 @@
+{
+  "name": "tlg-banking",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "plaid": "^38.0.0"
+  }
+}
