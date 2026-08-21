@@ -1,10 +1,52 @@
 <!DOCTYPE html>
-lessthenhtmlgreater
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>TLG Banking</title>
+</head>
+
 <body>
-<h1>TLG Banking</h1>
-<p>Securely connect your bank account.</p>
+  <h1>TLG Banking</h1>
+  <p>Securely connect your bank account.</p>
 
+  <button id="connect-bank">Connect Your Bank Account</button>
 
-<button>Connect Your Bank Account</button>
+  <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+
+  <script>
+    document.getElementById("connect-bank").addEventListener("click", async function () {
+      try {
+        const response = await fetch("/api/create-link-token", {
+          method: "POST"
+        });
+
+        const data = await response.json();
+
+        if (!data.link_token) {
+          alert("Could not start bank connection.");
+          return;
+        }
+
+        const handler = Plaid.create({
+          token: data.link_token,
+
+          onSuccess: function (public_token, metadata) {
+            alert("Bank connected successfully.");
+            console.log(public_token, metadata);
+          },
+
+          onExit: function (err, metadata) {
+            console.log(err, metadata);
+          }
+        });
+
+        handler.open();
+
+      } catch (error) {
+        console.error(error);
+        alert("Could not start bank connection.");
+      }
+    });
+  </script>
 </body>
 </html>
