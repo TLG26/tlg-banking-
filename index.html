@@ -23,9 +23,9 @@
         const data = await response.json();
 
         if (!data.link_token) {
-          alert("Could not start bank connection.");
-          return;
-        }
+  alert(JSON.stringify(data.error));
+  return;
+}
 
         const handler = Plaid.create({
           token: data.link_token,
