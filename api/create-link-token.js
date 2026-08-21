@@ -40,7 +40,4 @@ module.exports = async function handler(req, res) {
   } catch (error) {
     console.error(error.response?.data || error);
     return res.status(500).json({
-      error: "Unable to create Plaid link token",
-    });
-  }
-};
+  error: error.response?.data || error.message || "Unknown error",
